@@ -1,0 +1,1 @@
+"./RBX430-1.obj" "./RBX430_lcd.obj" "./snake.obj" "./snake_events.obj" "./snake_images.obj" "./snake_interrupts.obj" "./snakelib.obj" "../lnk_msp430f2274.cmd" -l"libc.a" 
