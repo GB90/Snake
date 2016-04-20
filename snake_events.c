@@ -48,39 +48,14 @@ void draw_triangle_food(FOOD* food, uint8 pen){
 	lcd_triangle(COL(food->food.point.x),ROW(food->food.point.y), food->size, pen);
 }
 void draw_square_rock(ROCK* rock){
-	lcd_square(COL(rock->point.x),ROW(rock->point.y), 1, 0x05);
+	lcd_square(COL(rock->rock.point.x),ROW(rock->rock.point.y), 1, 0x05);
 }
 // ****************************************************************
 // CREATION FUNCTIONS
-int checkCollision(uint16 x, uint16 y){
-	// check snake
-	unsigned int i;
-	collisionWithSNAKE(x, y)
-
-	for( i = 0; i < MAX_SNAKE; i++ ){ // go throught each part of the body
-		if (COL(x) == COL(snake[i].point.x) && ROW(y) == ROW(snake[i].point.y)){ // if head equals some part of the body
-			return 0;
-		}
-	}
-	// check food
-	for(i = 0; i < MAX_FOOD; i++){ // Check Food Collision
-		if(COL(foods[i]->food.point.x) == COL(x) && ROW(foods[i]->food.point.y) == ROW(y)){ // if hits food
-			return 0;
-		}
-	}
-	// check rocks
-	for(i = 0; i < MAX_ROCK; i++){
-		if((COL(rocks[i]->point.x) == COL(x)) && (ROW(rocks[i]->point.y) == ROW(y))){ // if hits a rock
-			return 0;
-		}
-	}
-	return 1; // Did not collide
-}
-
 unsigned int collisionWithSNAKE(uint16 x, uint16 y){
 	int i;
 	for( i = 0; i < MAX_SNAKE; i++ ){ // go throught each part of the body
-		if (COL(x) == COL(snake[i].point.x) && ROW(y) == ROW(snake[i].point.y)){ // if head equals some part of the body
+		if (x == snake[i].point.x && y == snake[i].point.y){ // if head equals some part of the body
 			return 0;
 		}
 	}
@@ -89,7 +64,7 @@ unsigned int collisionWithSNAKE(uint16 x, uint16 y){
 unsigned int collisionWithFOOD(uint16 x, uint16 y){
 	int i;
 	for(i = 0; i < MAX_FOOD; i++){ // Check Food Collision
-		if(COL(foods[i]->food.point.x) == COL(x) && ROW(foods[i]->food.point.y) == ROW(y)){ // if hits food
+		if(foods[i]->food.point.x == x && foods[i]->food.point.y == y){ // if hits food
 			return 0;
 		}
 	}
@@ -98,35 +73,77 @@ unsigned int collisionWithFOOD(uint16 x, uint16 y){
 unsigned int collisionWithROCK(uint16 x, uint16 y){
 	int i;
 	for(i = 0; i < MAX_ROCK; i++){
-		if((COL(rocks[i]->point.x) == COL(x)) && (ROW(rocks[i]->point.y) == ROW(y))){ // if hits a rock
+		if((COL(rocks[i]->rock.point.x) == COL(x)) && (ROW(rocks[i]->rock.point.y) == ROW(y))){ // if hits a rock
 			return 0;
 		}
 	}
 	return 1;
+}
+unsigned int collisionWithWALL(uint16 x, uint16 y){
+	if (snake[head].point.x > X_MAX){
+		return 0;
+	}
+	else if (snake[head].point.x < 0){
+		return 0;
+	}
+	else if (snake[head].point.y > Y_MAX){
+		return 0;
+	}
+	else if (snake[head].point.y < 0){
+		return 0;
+	}
+	else {
+		return 1;
+	}
+}
+
+int checkCollision(uint16 x, uint16 y){ // Check for a collision with any of the bellow, for creating new objects
+	if (!(collisionWithSNAKE(x,y))){
+		return 0;
+	}
+	else if (!(collisionWithFOOD(x,y))){
+		return 0;
+	}
+	else if (!(collisionWithROCK(x,y))){
+		return 0;
+	}
+//	else if (!(collisionWithWALL(x,y))){
+//		return 0;
+//	}
+	else {
+		return 1;
+	}
 }
 
 ROCK* createRock(ROCK* rock, uint16 x, uint16 y){
 	if(!(rock = (ROCK*)malloc(sizeof(ROCK)))){
 		ERROR2(SYS_ERROR_MALLOC, 10);
 	}
-	(rock)->point.x = x;
-	(rock)->point.y = y;
+	(rock)->rock.point.x = x;
+	(rock)->rock.point.y = y;
+	(rock)->size = 2;                		// 2 pixels in size
 	(rock)->draw = draw_square_rock;
 	(rock->draw)(rock);
 	return rock;
 }
 
-// TODO: Check for collisions of rocks
 void spawnRocks (){ // Spawns a random amount of Rocks
 	int i;
 	for( i = 0; i < MAX_ROCK; i++){
 		rocks[i] = NULL;
 	}
 	currentRocks = rand() % MAX_ROCK;
-	for(i = 0; i < currentRocks; i++){
-		rocks[i] = createRock(rocks[i],(rand() % X_MAX),(rand() % Y_MAX));
+	for(i = 0; i < MAX_ROCK; i++){
+		int randX = (rand() % X_MAX);
+		int randY = (rand() % Y_MAX);
+		while (!(checkCollision(randX, randY))){
+			randX = (rand() % X_MAX);
+			randY = (rand() % Y_MAX);
+		}
+		rocks[i] = createRock(rocks[i],randX,randY);
 	}
 }
+
 void freeAllRocks(){
 	int i;
 	for( i = 0; i < MAX_ROCK; i++){
@@ -183,6 +200,9 @@ void respawnFood(uint8 i){
 }
 void noCollideFood(uint8 totalFood){//creation for start of level
 	int i;
+	for( i = 0; i < MAX_FOOD; i++){
+		foods[i] = NULL;
+	}
 	for(i = 0; i < totalFood; i++){
 		int randX = (rand() % X_MAX);
 		int randY = (rand() % Y_MAX);
@@ -199,21 +219,18 @@ void noCollideFood(uint8 totalFood){//creation for start of level
 //------------------------------------------------------------------------------
 //-- move snake event ----------------------------------------------------------
 void MOVE_SNAKE_event(void){
-	add_head(&head, &direction);// add head
-	//lcd_point(COL(snake[head].point.x), ROW(snake[head].point.y), PENTX);//for showing where the object should get drawn
+	add_head(&head, &direction); // add head
+	lcd_point(COL(snake[head].point.x), ROW(snake[head].point.y), PENTX);//for showing where the object should get drawn
 	uint8 i;
-	// Check Rock Collision
 	if (level > 1){
-		for(i = 0; i < currentRocks; i++){
-			if(((COL(rocks[i]->point.x) == COL(snake[head].point.x)) && (ROW(rocks[i]->point.y) == ROW(snake[head].point.y)))){
-				lcd_cursor(50, 120);
-				printf("HIT A ROCK");
-				sys_event |= END_GAME; // Snake hit a rock end the game
-				return;
-			}
+		if (!(collisionWithROCK(snake[head].point.x, snake[head].point.y))){ // Check Rock Collision
+			lcd_cursor(50, 120);
+			printf("HIT A ROCK");
+			sys_event |= END_GAME; // Snake hit a rock end the game
+			return;
 		}
 		if (level > 2){ // Electric Wall Collision Checks
-			if ((COL(snake[head].point.x) >= X_MAX) || (COL(snake[head].point.x) <= COL(0)) || (ROW(snake[head].point.y) >= Y_MAX) || (ROW(snake[head].point.y) <= 0)){
+			if (!(collisionWithWALL(snake[head].point.x, snake[head].point.y))){
 				lcd_cursor(50, 120);
 				printf("HIT A WALL");
 				sys_event |= END_GAME; // Snake hit a wall during levels 3 or 4 end the game
@@ -245,26 +262,18 @@ void MOVE_SNAKE_event(void){
 			LCD_UPDATE_event();
 			if((level == 1) && (score >= LEVEL_1_FOOD)){
 				sys_event |= NEXT_LEVEL;
-				++level;
-				charge();
 				return;
 			}
 			else if((level == 2) && (score >= LEVEL_2_MAXSCORE)){
-				sys_event = NEXT_LEVEL;
-				++level;
-				charge();
+				sys_event |= NEXT_LEVEL;
 				return;
 			}
 			else if((level == 3) && (score >= LEVEL_3_MAXSCORE)){
 				sys_event |= NEXT_LEVEL;
-				++level;
-				charge();
 				return;
 			}
 			else if((level == 4) && (score >= LEVEL_4_MAXSCORE)){
-				sys_event |= END_GAME; // actual end of the game, You won!
-				lcd_wordImage(king_snake_image, 24, 16, 1);
-				imperial_march();
+				sys_event |= NEXT_LEVEL;
 				return;
 			}
 			beep(); // beep for the food
@@ -272,19 +281,20 @@ void MOVE_SNAKE_event(void){
 				free(foods[i]);
 				foods[i] = NULL;
 			} else {
-				respawnFood(i);// frees current the makes a new one
+				respawnFood(i); // frees current the makes a new one
 			}
 			sys_event |= LCD_UPDATE;
 		}
 	}
 	if (foodEaten == 0){
 		delete_tail(&tail);
+		return;
 	}
 } // end MOVE_SNAKE_event
 
 //-- new game event ------------------------------------------------------------
 void NEW_GAME_event(void){ //initialize all variables only for level 1!! aka we should only be here if it is level 1
-	lcd_backlight(1);
+	//lcd_backlight(1);
 	level = 1;
 	score = 0;
 	seconds = TIME_1_LIMIT;
@@ -327,13 +337,20 @@ void START_LEVEL_event(void){
 
 //-- next level event -----------------------------------------------------------
 void NEXT_LEVEL_event(void){
-	if (level > 1){
+	charge();
+	level++;
+	if (level > 1 ){
 		freeAllFood();
 		if( level > 2 ){
 			freeAllRocks();
+			if ( level > 4 ){
+				sys_event |= END_GAME; // actual end of the game, You won!
+				//lcd_clear();
+				lcd_wordImage(king_snake_image, 24, 16, 1);
+				imperial_march();
+			}
 		}
 	}
-	sys_event |= START_LEVEL;
 	game_mode = NEXT;
 } // end NEXT_LEVEL_event
 
@@ -373,7 +390,7 @@ void SWITCH_1_event(void){
 			}
 			break;
 		case NEXT:
-			sys_event |= START_LEVEL; //START_LEVEL?
+			sys_event |= START_LEVEL;
 			break;
 		default:
 			break;

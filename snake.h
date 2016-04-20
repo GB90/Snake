@@ -120,9 +120,12 @@ typedef struct food_struct {
    void (*draw)(struct food_struct* food, uint8 pen);
 } FOOD;
 
-typedef struct rock_struct
-{
-	POINT point;
+typedef struct rock_struct {
+	   union {
+	      uint16 xy;         // 16-bit food coordinate ((y << 8) + x)
+	      POINT point;       // 2 8-bit food coordinates (x, y)
+	   } rock;
+	uint8 size;
 	void(*draw)(struct rock_struct* rock );
 } ROCK;
 
