@@ -15,18 +15,19 @@
 #include "snake.h"
 #include "snakelib.h"
 
-extern volatile uint16 sys_event;			// pending events
-extern volatile enum MODE game_mode;		// 0=idle, 1=play, 2=next
-extern volatile uint16 score;				// current score
-extern volatile uint16 seconds;				// time
-extern volatile uint16 move_cnt;			// snake speed
-extern volatile uint8 level;				// current level (1-4)
-extern uint8 direction;						// current move direction
-extern uint8 head;							// head index into snake array
-extern uint8 tail;							// tail index into snake array
-extern SNAKE snake[MAX_SNAKE];				// snake segments
-extern FOOD* foods[MAX_FOOD];				// all foods
-extern ROCK* rocks[MAX_ROCK];				// all rocks
+//extern volatile uint16 sys_event;			// pending events
+//extern volatile enum MODE game_mode;		// 0=idle, 1=play, 2=next
+//extern volatile uint16 score;				// current score
+//extern volatile uint16 seconds;				// time
+//extern volatile uint16 move_cnt;			// snake speed
+//extern volatile uint8 level;				// current level (1-4)
+//extern uint8 direction;						// current move direction
+//extern uint8 head;							// head index into snake array
+//extern uint8 tail;							// tail index into snake array
+//extern SNAKE snake[MAX_SNAKE];				// snake segments
+//extern FOOD* foods[MAX_FOOD];				// all foods
+//extern ROCK* rocks[MAX_ROCK];				// all rocks
+//extern TELE* teles[MAX_TELE];				// all teles
 extern const uint16 snake_text_image[];		// snake text image
 extern const uint16 snake1_image[];			// snake image
 extern const uint16 king_snake_image[];		//
@@ -50,10 +51,16 @@ void draw_triangle_food(FOOD* food, uint8 pen){
 void draw_square_rock(ROCK* rock){
 	lcd_square(COL(rock->rock.point.x),ROW(rock->rock.point.y), 1, 0x05);
 }
+void draw_circle_tele(TELE* tele){
+	lcd_circle(COL(tele->tele.point.x),ROW(tele->tele.point.y), 2, 0x05);
+}
+void draw_circle1_tele(TELE* tele){
+	lcd_circle(COL(tele->tele.point.x),ROW(tele->tele.point.y), 2, 0x01);
+}
 // ****************************************************************
 // CREATION FUNCTIONS
 unsigned int collisionWithSNAKE(uint16 x, uint16 y){
-	int i;
+	uint8 i;
 	for( i = 0; i < MAX_SNAKE; i++ ){ // go throught each part of the body
 		if (x == snake[i].point.x && y == snake[i].point.y){ // if head equals some part of the body
 			return 0;
@@ -62,7 +69,7 @@ unsigned int collisionWithSNAKE(uint16 x, uint16 y){
 	return 1;
 }
 unsigned int collisionWithFOOD(uint16 x, uint16 y){
-	int i;
+	uint8 i;
 	for(i = 0; i < MAX_FOOD; i++){ // Check Food Collision
 		if(foods[i]->food.point.x == x && foods[i]->food.point.y == y){ // if hits food
 			return 0;
@@ -71,7 +78,7 @@ unsigned int collisionWithFOOD(uint16 x, uint16 y){
 	return 1;
 }
 unsigned int collisionWithROCK(uint16 x, uint16 y){
-	int i;
+	uint8 i;
 	for(i = 0; i < MAX_ROCK; i++){
 		if((COL(rocks[i]->rock.point.x) == COL(x)) && (ROW(rocks[i]->rock.point.y) == ROW(y))){ // if hits a rock
 			return 0;
@@ -79,17 +86,18 @@ unsigned int collisionWithROCK(uint16 x, uint16 y){
 	}
 	return 1;
 }
+
 unsigned int collisionWithWALL(uint16 x, uint16 y){
 	if (snake[head].point.x > X_MAX){
 		return 0;
 	}
-	else if (snake[head].point.x < 0){
+	else if (snake[head].point.x <= 0){
 		return 0;
 	}
 	else if (snake[head].point.y > Y_MAX){
 		return 0;
 	}
-	else if (snake[head].point.y < 0){
+	else if (snake[head].point.y <= 0){
 		return 0;
 	}
 	else {
@@ -107,13 +115,61 @@ int checkCollision(uint16 x, uint16 y){ // Check for a collision with any of the
 	else if (!(collisionWithROCK(x,y))){
 		return 0;
 	}
-//	else if (!(collisionWithWALL(x,y))){
-//		return 0;
-//	}
 	else {
 		return 1;
 	}
 }
+
+void collisionWithTELE(){
+	uint8 i;
+	for(i = 0; i < MAX_TELE; i++){
+		if((COL(teles[i]->tele.point.x) == COL(snake[head].point.x)) && (ROW(teles[i]->tele.point.y) == ROW(snake[head].point.y))){ // if hits a tele
+			switch (i){
+				case 0:
+					snake[head].point.x = teles[1]->tele.point.x;
+					snake[head].point.y = teles[1]->tele.point.y;
+				case 1:
+					snake[head].point.x = teles[0]->tele.point.x;
+					snake[head].point.y = teles[0]->tele.point.y;
+			}
+			return;
+		}
+	}
+}
+
+void freeAllTele(){
+	uint8 i;
+	for( i = 0; i < MAX_TELE; i++){
+		free(teles[i]);
+		teles[i] = NULL;
+	}
+}
+
+TELE* createTele(TELE* tele, uint16 x, uint16 y){
+	if(!(tele = (TELE*)malloc(sizeof(TELE)))){
+		ERROR2(SYS_ERROR_MALLOC, 10);
+	}
+	(tele)->tele.point.x = x;
+	(tele)->tele.point.y = y;
+	(tele)->size = 2;                		// 2 pixels in size
+	(tele)->draw = draw_circle_tele;
+	(tele->draw)(tele);
+	return tele;
+}
+
+void spawnTeles (){ // Spawns a random amount of Rocks
+	uint8 i;
+	for(i = 0; i < MAX_TELE; i++){
+		int randX = (rand() % X_MAX);
+		int randY = (rand() % Y_MAX);
+		while (!(checkCollision(randX, randY))){
+			randX = (rand() % X_MAX);
+			randY = (rand() % Y_MAX);
+		}
+		teles[i] = createTele(teles[i],randX,randY);
+	}
+}
+
 
 ROCK* createRock(ROCK* rock, uint16 x, uint16 y){
 	if(!(rock = (ROCK*)malloc(sizeof(ROCK)))){
@@ -128,7 +184,7 @@ ROCK* createRock(ROCK* rock, uint16 x, uint16 y){
 }
 
 void spawnRocks (){ // Spawns a random amount of Rocks
-	int i;
+	uint8 i;
 	for( i = 0; i < MAX_ROCK; i++){
 		rocks[i] = NULL;
 	}
@@ -145,7 +201,7 @@ void spawnRocks (){ // Spawns a random amount of Rocks
 }
 
 void freeAllRocks(){
-	int i;
+	uint8 i;
 	for( i = 0; i < MAX_ROCK; i++){
 		free(rocks[i]);
 		rocks[i] = NULL;
@@ -198,8 +254,9 @@ void respawnFood(uint8 i){
 	}
 	foods[i] = createFood(foods[i], randX, randY);
 }
+
 void noCollideFood(uint8 totalFood){//creation for start of level
-	int i;
+	uint8 i;
 	for( i = 0; i < MAX_FOOD; i++){
 		foods[i] = NULL;
 	}
@@ -219,9 +276,12 @@ void noCollideFood(uint8 totalFood){//creation for start of level
 //------------------------------------------------------------------------------
 //-- move snake event ----------------------------------------------------------
 void MOVE_SNAKE_event(void){
+	uint8 i;
+	if (level == 1){
+		collisionWithTELE();
+	}
 	add_head(&head, &direction); // add head
 	lcd_point(COL(snake[head].point.x), ROW(snake[head].point.y), PENTX);//for showing where the object should get drawn
-	uint8 i;
 	if (level > 1){
 		if (!(collisionWithROCK(snake[head].point.x, snake[head].point.y))){ // Check Rock Collision
 			lcd_cursor(50, 120);
@@ -260,7 +320,7 @@ void MOVE_SNAKE_event(void){
 			foodEaten = 1;
 			score += level;
 			LCD_UPDATE_event();
-			if((level == 1) && (score >= LEVEL_1_FOOD)){
+			if((level == 1) && (score >= LEVEL_1_MAXSCORE)){
 				sys_event |= NEXT_LEVEL;
 				return;
 			}
@@ -311,6 +371,7 @@ void START_LEVEL_event(void){
 		move_cnt = WDT_MOVE1;
 		seconds = TIME_1_LIMIT;
 		noCollideFood(LEVEL_1_FOOD);
+		spawnTeles();
 		break;
 	case 2:
 		move_cnt = WDT_MOVE2;
@@ -339,6 +400,9 @@ void START_LEVEL_event(void){
 void NEXT_LEVEL_event(void){
 	charge();
 	level++;
+	if (level == 2){
+		freeAllTele();
+	}
 	if (level > 1 ){
 		freeAllFood();
 		if( level > 2 ){
@@ -346,11 +410,16 @@ void NEXT_LEVEL_event(void){
 			if ( level > 4 ){
 				sys_event |= END_GAME; // actual end of the game, You won!
 				//lcd_clear();
-				lcd_wordImage(king_snake_image, 24, 16, 1);
+				lcd_wordImage(king_snake_image, 36, 16, 1);
 				imperial_march();
+				game_mode = IDLE;
+				return;
 			}
 		}
 	}
+	lcd_rectangle(48,54,66,16,0x03);
+	lcd_cursor(52, 58);
+	printf("NEXT LEVEL");
 	game_mode = NEXT;
 } // end NEXT_LEVEL_event
 
@@ -372,7 +441,7 @@ void END_GAME_event(void){
 	lcd_cursor(40,20);
 	printf("Hit Switch 1!");
 	game_mode = IDLE;
-	level = 0;
+	rasberry();
 } // end END_GAME_event
 
 //-- switch #1 event -----------------------------------------------------------
@@ -382,11 +451,9 @@ void SWITCH_1_event(void){
 			sys_event |= NEW_GAME;
 			break;
 		case PLAY:
-			if (direction != LEFT){
-				if (snake[head].point.x < X_MAX){
-					direction = RIGHT;
-					sys_event |= MOVE_SNAKE;
-				}
+			if (direction != LEFT && snake[head].point.x < X_MAX){
+				direction = RIGHT;
+				sys_event |= MOVE_SNAKE;
 			}
 			break;
 		case NEXT:
@@ -401,13 +468,10 @@ void SWITCH_1_event(void){
 void SWITCH_2_event(void){
 	switch (game_mode){
 		case PLAY:
-			if (direction != RIGHT){
-				if (snake[head].point.x > 0){
-					direction = LEFT;
-					sys_event |= MOVE_SNAKE;
-				}
+			if ((direction != RIGHT) && (snake[head].point.x > 0)){
+				direction = LEFT;
+				sys_event |= MOVE_SNAKE;
 			}
-		case IDLE:
 		default:
 			break;
 	}
@@ -417,11 +481,10 @@ void SWITCH_2_event(void){
 void SWITCH_3_event(void){
 	switch (game_mode){
 		case PLAY:
-			if ((direction != UP) && snake[head].point.y > 0){
+			if ((direction != UP) && (snake[head].point.y > 0)){
 				direction = DOWN;
 				sys_event |= MOVE_SNAKE;
 			}
-		case IDLE:
 		default:
 			break;
 	}
@@ -431,13 +494,10 @@ void SWITCH_3_event(void){
 void SWITCH_4_event(void){
 	switch (game_mode){
 		case PLAY:
-			if (direction != DOWN){
-				if (snake[head].point.y < Y_MAX){
-					direction = UP;
-					sys_event |= MOVE_SNAKE;
-				}
+			if ((direction != DOWN) && (snake[head].point.y < Y_MAX)){
+				direction = UP;
+				sys_event |= MOVE_SNAKE;
 			}
-		case IDLE:
 		default:
 			break;
 	}
@@ -445,7 +505,7 @@ void SWITCH_4_event(void){
 
 //-- update LCD event -----------------------------------------------------------
 void LCD_UPDATE_event(void){
-	if (sys_event == END_GAME || game_mode == IDLE){//dont show this if the game hasn't started or is over
+	if (sys_event == END_GAME || game_mode == IDLE || game_mode == NEXT){//dont show this if the game hasn't started or is over
 		return;
 	}
 	lcd_cursor(0,150);
@@ -462,7 +522,7 @@ void LCD_UPDATE_event(void){
 	printf("LEFT");
 	lcd_cursor(124,0);
 	printf("RIGHT");
-	if( seconds <= 0 ){
+	if( seconds <= 0 && game_mode != NEXT){
 		lcd_cursor(10, 110);
 		printf("You ran out of time!");
 		sys_event |= END_GAME; //times up, end the game

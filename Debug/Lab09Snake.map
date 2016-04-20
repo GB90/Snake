@@ -1,10 +1,10 @@
 ******************************************************************************
                   MSP430 Linker PC v4.4.7                      
 ******************************************************************************
->> Linked Tue Apr 19 20:01:20 2016
+>> Linked Tue Apr 19 22:36:35 2016
 
 OUTPUT FILE NAME:   <Lab09Snake.out>
-ENTRY POINT SYMBOL: "_c_int00_noargs_noexit"  address: 0000a21c
+ENTRY POINT SYMBOL: "_c_int00_noargs_noexit"  address: 0000a430
 
 
 MEMORY CONFIGURATION
@@ -14,12 +14,12 @@ MEMORY CONFIGURATION
   SFR                   00000000   00000010  00000000  00000010  RWIX
   PERIPHERALS_8BIT      00000010   000000f0  00000000  000000f0  RWIX
   PERIPHERALS_16BIT     00000100   00000100  00000000  00000100  RWIX
-  RAM                   00000200   00000400  000003a0  00000060  RWIX
+  RAM                   00000200   00000400  000003a4  0000005c  RWIX
   INFOD                 00001000   00000040  00000000  00000040  RWIX
   INFOC                 00001040   00000040  00000000  00000040  RWIX
   INFOB                 00001080   00000040  00000000  00000040  RWIX
   INFOA                 000010c0   00000040  00000000  00000040  RWIX
-  FLASH                 00008000   00007fde  0000429c  00003d42  RWIX
+  FLASH                 00008000   00007fde  000044c8  00003b16  RWIX
   BSLSIGNATURE          0000ffde   00000002  00000002  00000000  RWIX  ffff 
   INT00                 0000ffe0   00000002  00000000  00000002  RWIX
   INT01                 0000ffe2   00000002  00000000  00000002  RWIX
@@ -48,169 +48,176 @@ section   page    origin      length       input sections
                   00000200    00000004     rts430_eabi.lib : memory.obj (.sysmem)
                   00000204    000001cc     --HOLE--
 
-.bss       0    000003d0    0000014a     UNINITIALIZED
+.bss       0    000003d0    0000014e     UNINITIALIZED
                   000003d0    00000100     (.common:snake)
                   000004d0    00000014     (.common:foods)
                   000004e4    0000000a     (.common:rocks)
                   000004ee    00000004     (.common:WDT_delay)
-                  000004f2    00000002     (.common:TB0_tone_on)
-                  000004f4    00000002     (.common:WDT_cps_cnt)
-                  000004f6    00000002     (.common:WDT_debounce_cnt)
-                  000004f8    00000002     (.common:WDT_move_cnt)
-                  000004fa    00000002     (.common:backlight_cnt)
-                  000004fc    00000002     (.common:currentRocks)
-                  000004fe    00000002     (.common:foodEaten)
-                  00000500    00000002     (.common:game_mode)
-                  00000502    00000002     (.common:i2c_fSCL)
-                  00000504    00000002     (.common:memsize)
-                  00000506    00000002     (.common:move_cnt)
-                  00000508    00000002     (.common:score)
-                  0000050a    00000002     (.common:seconds)
-                  0000050c    00000002     (.common:sys_base)
-                  0000050e    00000002     (.common:sys_event)
-                  00000510    00000002     (.common:sys_free)
-                  00000512    00000001     (.common:char_cnt)
-                  00000513    00000001     (.common:direction)
-                  00000514    00000001     (.common:head)
-                  00000515    00000001     (.common:lcd_dmode)
-                  00000516    00000001     (.common:lcd_x)
-                  00000517    00000001     (.common:lcd_y)
-                  00000518    00000001     (.common:level)
-                  00000519    00000001     (.common:tail)
+                  000004f2    00000004     (.common:teles)
+                  000004f6    00000002     (.common:TB0_tone_on)
+                  000004f8    00000002     (.common:WDT_cps_cnt)
+                  000004fa    00000002     (.common:WDT_debounce_cnt)
+                  000004fc    00000002     (.common:WDT_move_cnt)
+                  000004fe    00000002     (.common:backlight_cnt)
+                  00000500    00000002     (.common:currentRocks)
+                  00000502    00000002     (.common:foodEaten)
+                  00000504    00000002     (.common:game_mode)
+                  00000506    00000002     (.common:i2c_fSCL)
+                  00000508    00000002     (.common:memsize)
+                  0000050a    00000002     (.common:move_cnt)
+                  0000050c    00000002     (.common:score)
+                  0000050e    00000002     (.common:seconds)
+                  00000510    00000002     (.common:sys_base)
+                  00000512    00000002     (.common:sys_event)
+                  00000514    00000002     (.common:sys_free)
+                  00000516    00000001     (.common:char_cnt)
+                  00000517    00000001     (.common:direction)
+                  00000518    00000001     (.common:head)
+                  00000519    00000001     (.common:lcd_dmode)
+                  0000051a    00000001     (.common:lcd_x)
+                  0000051b    00000001     (.common:lcd_y)
+                  0000051c    00000001     (.common:level)
+                  0000051d    00000001     (.common:tail)
 
-.data      0    0000051a    0000000a     UNINITIALIZED
-                  0000051a    00000004     rts430_eabi.lib : rand.obj (.data)
-                  0000051e    00000002                     : _lock.obj (.data:_lock)
-                  00000520    00000002                     : _lock.obj (.data:_unlock)
-                  00000522    00000002                     : memory.obj (.data)
+.data      0    0000051e    0000000a     UNINITIALIZED
+                  0000051e    00000004     rts430_eabi.lib : rand.obj (.data)
+                  00000522    00000002                     : _lock.obj (.data:_lock)
+                  00000524    00000002                     : _lock.obj (.data:_unlock)
+                  00000526    00000002                     : memory.obj (.data)
 
 .stack     0    00000584    0000007c     UNINITIALIZED
                   00000584    00000002     rts430_eabi.lib : boot.obj (.stack)
                   00000586    0000007a     --HOLE--
 
-.text      0    00008000    00002366     
+.text      0    00008000    00002586     
                   00008000    00000246     RBX430_lcd.obj (.text:lcd_point)
                   00008246    00000244     RBX430_lcd.obj (.text:my_printfi)
-                  0000848a    000001d6     snake_events.obj (.text:MOVE_SNAKE_event)
-                  00008660    000001d0     snakelib.obj (.text:add_head)
-                  00008830    00000198     RBX430-1.obj (.text:ERROR2)
-                  000089c8    00000186     RBX430_lcd.obj (.text:lcd_init)
-                  00008b4e    00000168     snake.obj (.text:main)
-                  00008cb6    0000015a     RBX430_lcd.obj (.text:lcd_circle)
-                  00008e10    00000132     RBX430_lcd.obj (.text:lcd_putchar)
-                  00008f42    000000d8     snake_events.obj (.text:LCD_UPDATE_event)
-                  0000901a    000000d4     RBX430_lcd.obj (.text:lcd_wordImage)
-                  000090ee    000000c2     snake_interrupts.obj (.text:WDT_ISR)
-                  000091b0    000000c0     RBX430-1.obj (.text:RBX430_init)
-                  00009270    000000ae     rts430_eabi.lib : memory.obj (.text:malloc)
-                  0000931e    000000a8     RBX430_lcd.obj (.text:lcd_star)
-                  000093c6    00000098     snake_events.obj (.text:spawnRocks)
-                  0000945e    0000008c     snake_events.obj (.text:noCollideFood)
-                  000094ea    00000088     RBX430_lcd.obj (.text:lcd_rectangle)
-                  00009572    00000082     snake_events.obj (.text:START_LEVEL_event)
-                  000095f4    00000080     rts430_eabi.lib : memory.obj (.text:free)
-                  00009674    0000007e     snake_events.obj (.text:createFood)
-                  000096f2    0000007e     RBX430_lcd.obj (.text:lcd_triangle)
-                  00009770    0000007a     snake_events.obj (.text:END_GAME_event)
-                  000097ea    00000076     snake_events.obj (.text:respawnFood)
-                  00009860    00000068     snake_events.obj (.text:collisionWithROCK)
-                  000098c8    00000064     rts430_eabi.lib : copy_decompress_rle.obj (.text:__TI_decompress_rle_core)
-                  0000992c    0000005e     RBX430_lcd.obj (.text:lcd_WD)
-                  0000998a    00000058     rts430_eabi.lib : autoinit.obj (.text:_auto_init)
-                  000099e2    0000004c                     : lsr16.obj (.text)
-                  00009a2e    0000004a     snake_events.obj (.text:NEXT_LEVEL_event)
-                  00009a78    0000004a     snakelib.obj (.text:delete_tail)
-                  00009ac2    0000004a     RBX430_lcd.obj (.text:lcd_WD2)
-                  00009b0c    00000046     RBX430_lcd.obj (.text:DelayMs)
-                  00009b52    00000044     snakelib.obj (.text:new_snake)
-                  00009b96    00000042     snake_events.obj (.text:SWITCH_1_event)
-                  00009bd8    00000042     snake_events.obj (.text:createRock)
-                  00009c1a    00000040     snakelib.obj (.text:outTone)
-                  00009c5a    00000038     RBX430_lcd.obj (.text:ReadDataWord)
-                  00009c92    00000038     rts430_eabi.lib : memory.obj (.text:minit)
-                  00009cca    00000038                     : rand.obj (.text:rand)
-                  00009d02    00000036     snake_events.obj (.text:collisionWithFOOD)
-                  00009d38    00000036     snake_events.obj (.text:draw_circle_food)
-                  00009d6e    00000036     snake_events.obj (.text:draw_square_food)
-                  00009da4    00000036     snake_events.obj (.text:draw_star_food)
-                  00009dda    00000036     snake_events.obj (.text:draw_triangle_food)
-                  00009e10    00000034     RBX430_lcd.obj (.text:WriteDataWord)
-                  00009e44    00000034     RBX430_lcd.obj (.text:lcd_set_x_y)
-                  00009e78    00000032     snake_events.obj (.text:checkCollision)
-                  00009eaa    00000032     snake_events.obj (.text:draw_square_rock)
-                  00009edc    00000030     snake_events.obj (.text:collisionWithSNAKE)
-                  00009f0c    00000030     snakelib.obj (.text:doDitty)
-                  00009f3c    00000030     RBX430_lcd.obj (.text:lcd_cursor)
-                  00009f6c    0000002e     RBX430_lcd.obj (.text:lcd_set)
-                  00009f9a    0000002e     snake_interrupts.obj (.text:port1_init)
-                  00009fc8    0000002c     RBX430-1.obj (.text:ISR_trap)
-                  00009ff4    0000002c     rts430_eabi.lib : div16s.obj (.text)
-                  0000a020    0000002a     snake_events.obj (.text:freeAllFood)
-                  0000a04a    0000002a     snake_events.obj (.text:freeAllRocks)
-                  0000a074    00000028     snake_events.obj (.text:SWITCH_4_event)
-                  0000a09c    00000026     snake_events.obj (.text:NEW_GAME_event)
-                  0000a0c2    00000026     snake_events.obj (.text:SWITCH_3_event)
-                  0000a0e8    00000026     snake_events.obj (.text:collisionWithWALL)
-                  0000a10e    00000026     rts430_eabi.lib : mult32.obj (.text)
-                  0000a134    00000024     snake_events.obj (.text:SWITCH_2_event)
-                  0000a158    00000024     RBX430_lcd.obj (.text:lcd_printf)
-                  0000a17c    00000024     snake_interrupts.obj (.text:watchdog_init)
-                  0000a1a0    00000020     RBX430_lcd.obj (.text:ReadData)
-                  0000a1c0    00000020     RBX430_lcd.obj (.text:lcd_square)
-                  0000a1e0    0000001e     RBX430_lcd.obj (.text:WriteCmd)
-                  0000a1fe    0000001e     RBX430_lcd.obj (.text:WriteData)
-                  0000a21c    0000001a     rts430_eabi.lib : boot_special.obj (.text:_c_int00_noargs_noexit)
-                  0000a236    0000001a     snakelib.obj (.text:timerB_init)
-                  0000a250    00000016     snake_interrupts.obj (.text:Port_1_ISR)
-                  0000a266    00000016     rts430_eabi.lib : div16u.obj (.text)
-                  0000a27c    00000014     snakelib.obj (.text:beep)
-                  0000a290    00000014     rts430_eabi.lib : copy_zero_init.obj (.text:decompress:ZI:__TI_zero_init)
-                  0000a2a4    00000014     RBX430_lcd.obj (.text:lcd_backlight)
-                  0000a2b8    00000014     rts430_eabi.lib : mult16.obj (.text)
-                  0000a2cc    00000012                     : copy_decompress_none.obj (.text:decompress:none:__TI_decompress_none)
-                  0000a2de    00000012                     : lsr32.obj (.text:l_lsr)
-                  0000a2f0    00000012                     : memcpy.obj (.text:memcpy)
-                  0000a302    00000010                     : epilog.obj (.text)
-                  0000a312    0000000e     snakelib.obj (.text:charge)
-                  0000a320    0000000e     snakelib.obj (.text:imperial_march)
-                  0000a32e    0000000e     rts430_eabi.lib : strlen.obj (.text:strlen)
-                  0000a33c    0000000a     RBX430_lcd.obj (.text:lcd_clear)
-                  0000a346    00000008     RBX430-1.obj (.text:ADC10_ISR)
-                  0000a34e    00000008     snakelib.obj (.text:blink)
-                  0000a356    00000006     rts430_eabi.lib : copy_decompress_rle.obj (.text:decompress:rle24:__TI_decompress_rle24)
-                  0000a35c    00000004                     : pre_init.obj (.text:_system_pre_init)
-                  0000a360    00000004                     : exit.obj (.text:abort)
-                  0000a364    00000002                     : _lock.obj (.text:_nop)
+                  0000848a    000001dc     snake_events.obj (.text:MOVE_SNAKE_event)
+                  00008666    000001d0     snakelib.obj (.text:add_head)
+                  00008836    00000198     RBX430-1.obj (.text:ERROR2)
+                  000089ce    00000186     RBX430_lcd.obj (.text:lcd_init)
+                  00008b54    00000168     snake.obj (.text:main)
+                  00008cbc    0000015a     RBX430_lcd.obj (.text:lcd_circle)
+                  00008e16    00000132     RBX430_lcd.obj (.text:lcd_putchar)
+                  00008f48    000000e8     snake_events.obj (.text:LCD_UPDATE_event)
+                  00009030    000000d4     RBX430_lcd.obj (.text:lcd_wordImage)
+                  00009104    000000c2     snake_interrupts.obj (.text:WDT_ISR)
+                  000091c6    000000c0     RBX430-1.obj (.text:RBX430_init)
+                  00009286    000000ae     rts430_eabi.lib : memory.obj (.text:malloc)
+                  00009334    000000a8     RBX430_lcd.obj (.text:lcd_star)
+                  000093dc    00000098     snake_events.obj (.text:spawnRocks)
+                  00009474    00000096     snake_events.obj (.text:collisionWithTELE)
+                  0000950a    0000008e     snake_events.obj (.text:NEXT_LEVEL_event)
+                  00009598    00000088     RBX430_lcd.obj (.text:lcd_rectangle)
+                  00009620    00000086     snake_events.obj (.text:START_LEVEL_event)
+                  000096a6    00000086     snake_events.obj (.text:noCollideFood)
+                  0000972c    00000080     rts430_eabi.lib : memory.obj (.text:free)
+                  000097ac    0000007e     snake_events.obj (.text:createFood)
+                  0000982a    0000007e     RBX430_lcd.obj (.text:lcd_triangle)
+                  000098a8    0000007a     snake_events.obj (.text:END_GAME_event)
+                  00009922    00000076     snake_events.obj (.text:respawnFood)
+                  00009998    0000006c     snake_events.obj (.text:spawnTeles)
+                  00009a04    00000068     snake_events.obj (.text:collisionWithROCK)
+                  00009a6c    00000064     rts430_eabi.lib : copy_decompress_rle.obj (.text:__TI_decompress_rle_core)
+                  00009ad0    0000005e     RBX430_lcd.obj (.text:lcd_WD)
+                  00009b2e    00000058     rts430_eabi.lib : autoinit.obj (.text:_auto_init)
+                  00009b86    0000004c                     : lsr16.obj (.text)
+                  00009bd2    0000004a     snakelib.obj (.text:delete_tail)
+                  00009c1c    0000004a     RBX430_lcd.obj (.text:lcd_WD2)
+                  00009c66    00000046     RBX430_lcd.obj (.text:DelayMs)
+                  00009cac    00000046     snake_events.obj (.text:collisionWithWALL)
+                  00009cf2    00000044     snakelib.obj (.text:new_snake)
+                  00009d36    00000042     snake_events.obj (.text:SWITCH_1_event)
+                  00009d78    00000042     snake_events.obj (.text:createRock)
+                  00009dba    00000042     snake_events.obj (.text:createTele)
+                  00009dfc    00000040     snakelib.obj (.text:outTone)
+                  00009e3c    00000038     RBX430_lcd.obj (.text:ReadDataWord)
+                  00009e74    00000038     rts430_eabi.lib : memory.obj (.text:minit)
+                  00009eac    00000038                     : rand.obj (.text:rand)
+                  00009ee4    00000036     snake_events.obj (.text:collisionWithFOOD)
+                  00009f1a    00000036     snake_events.obj (.text:draw_circle_food)
+                  00009f50    00000036     snake_events.obj (.text:draw_square_food)
+                  00009f86    00000036     snake_events.obj (.text:draw_star_food)
+                  00009fbc    00000036     snake_events.obj (.text:draw_triangle_food)
+                  00009ff2    00000034     RBX430_lcd.obj (.text:WriteDataWord)
+                  0000a026    00000034     RBX430_lcd.obj (.text:lcd_set_x_y)
+                  0000a05a    00000032     snake_events.obj (.text:checkCollision)
+                  0000a08c    00000032     snake_events.obj (.text:draw_circle_tele)
+                  0000a0be    00000032     snake_events.obj (.text:draw_square_rock)
+                  0000a0f0    00000030     snake_events.obj (.text:collisionWithSNAKE)
+                  0000a120    00000030     snakelib.obj (.text:doDitty)
+                  0000a150    00000030     RBX430_lcd.obj (.text:lcd_cursor)
+                  0000a180    0000002e     RBX430_lcd.obj (.text:lcd_set)
+                  0000a1ae    0000002e     snake_interrupts.obj (.text:port1_init)
+                  0000a1dc    0000002c     RBX430-1.obj (.text:ISR_trap)
+                  0000a208    0000002c     rts430_eabi.lib : div16s.obj (.text)
+                  0000a234    0000002a     snake_events.obj (.text:freeAllFood)
+                  0000a25e    0000002a     snake_events.obj (.text:freeAllRocks)
+                  0000a288    00000028     snake_events.obj (.text:SWITCH_4_event)
+                  0000a2b0    00000026     snake_events.obj (.text:NEW_GAME_event)
+                  0000a2d6    00000026     snake_events.obj (.text:SWITCH_3_event)
+                  0000a2fc    00000026     snake_events.obj (.text:freeAllTele)
+                  0000a322    00000026     rts430_eabi.lib : mult32.obj (.text)
+                  0000a348    00000024     snake_events.obj (.text:SWITCH_2_event)
+                  0000a36c    00000024     RBX430_lcd.obj (.text:lcd_printf)
+                  0000a390    00000024     snake_interrupts.obj (.text:watchdog_init)
+                  0000a3b4    00000020     RBX430_lcd.obj (.text:ReadData)
+                  0000a3d4    00000020     RBX430_lcd.obj (.text:lcd_square)
+                  0000a3f4    0000001e     RBX430_lcd.obj (.text:WriteCmd)
+                  0000a412    0000001e     RBX430_lcd.obj (.text:WriteData)
+                  0000a430    0000001a     rts430_eabi.lib : boot_special.obj (.text:_c_int00_noargs_noexit)
+                  0000a44a    0000001a     snakelib.obj (.text:timerB_init)
+                  0000a464    00000016     snake_interrupts.obj (.text:Port_1_ISR)
+                  0000a47a    00000016     rts430_eabi.lib : div16u.obj (.text)
+                  0000a490    00000014     snakelib.obj (.text:beep)
+                  0000a4a4    00000014     rts430_eabi.lib : copy_zero_init.obj (.text:decompress:ZI:__TI_zero_init)
+                  0000a4b8    00000014     RBX430_lcd.obj (.text:lcd_backlight)
+                  0000a4cc    00000014     rts430_eabi.lib : mult16.obj (.text)
+                  0000a4e0    00000012                     : copy_decompress_none.obj (.text:decompress:none:__TI_decompress_none)
+                  0000a4f2    00000012                     : lsr32.obj (.text:l_lsr)
+                  0000a504    00000012                     : memcpy.obj (.text:memcpy)
+                  0000a516    00000010                     : epilog.obj (.text)
+                  0000a526    0000000e     snakelib.obj (.text:charge)
+                  0000a534    0000000e     snakelib.obj (.text:imperial_march)
+                  0000a542    0000000e     rts430_eabi.lib : strlen.obj (.text:strlen)
+                  0000a550    0000000c     snakelib.obj (.text:rasberry)
+                  0000a55c    0000000a     RBX430_lcd.obj (.text:lcd_clear)
+                  0000a566    00000008     RBX430-1.obj (.text:ADC10_ISR)
+                  0000a56e    00000008     snakelib.obj (.text:blink)
+                  0000a576    00000006     rts430_eabi.lib : copy_decompress_rle.obj (.text:decompress:rle24:__TI_decompress_rle24)
+                  0000a57c    00000004                     : pre_init.obj (.text:_system_pre_init)
+                  0000a580    00000004                     : exit.obj (.text:abort)
+                  0000a584    00000002                     : _lock.obj (.text:_nop)
 
-.const     0    0000a366    00001f16     
-                  0000a366    00000f28     snake_images.obj (.const:king_snake_image)
-                  0000b28e    00000682     snake_images.obj (.const:snake1_image)
-                  0000b910    0000049e     snake_images.obj (.const:snake_text_image)
-                  0000bdae    000001e0     RBX430_lcd.obj (.const:cs)
-                  0000bf8e    00000118     snakelib.obj (.const:imperial_march_notes)
-                  0000c0a6    000000a8     snake_events.obj (.const:.string)
-                  0000c14e    000000a2     RBX430_lcd.obj (.const:.string:dv3)
-                  0000c1f0    0000002c     RBX430_lcd.obj (.const:dv$3)
-                  0000c21c    00000018     snake.obj (.const:.string)
-                  0000c234    00000018     snakelib.obj (.const:Charge)
-                  0000c24c    00000011     RBX430_lcd.obj (.const:.string:lHexChar$1)
-                  0000c25d    00000001     --HOLE-- [fill = 0]
-                  0000c25e    00000011     RBX430_lcd.obj (.const:.string:uHexChar$2)
-                  0000c26f    00000001     --HOLE-- [fill = 0]
-                  0000c270    00000006     RBX430_lcd.obj (.const:px_off)
-                  0000c276    00000006     RBX430_lcd.obj (.const:px_on)
+.const     0    0000a586    00001f22     
+                  0000a586    00000f28     snake_images.obj (.const:king_snake_image)
+                  0000b4ae    00000682     snake_images.obj (.const:snake1_image)
+                  0000bb30    0000049e     snake_images.obj (.const:snake_text_image)
+                  0000bfce    000001e0     RBX430_lcd.obj (.const:cs)
+                  0000c1ae    00000118     snakelib.obj (.const:imperial_march_notes)
+                  0000c2c6    000000b4     snake_events.obj (.const:.string)
+                  0000c37a    000000a2     RBX430_lcd.obj (.const:.string:dv3)
+                  0000c41c    0000002c     RBX430_lcd.obj (.const:dv$3)
+                  0000c448    00000018     snake.obj (.const:.string)
+                  0000c460    00000018     snakelib.obj (.const:Charge)
+                  0000c478    00000011     RBX430_lcd.obj (.const:.string:lHexChar$1)
+                  0000c489    00000001     --HOLE-- [fill = 0]
+                  0000c48a    00000011     RBX430_lcd.obj (.const:.string:uHexChar$2)
+                  0000c49b    00000001     --HOLE-- [fill = 0]
+                  0000c49c    00000006     RBX430_lcd.obj (.const:px_off)
+                  0000c4a2    00000006     RBX430_lcd.obj (.const:px_on)
 
-.cinit     0    0000c27c    00000020     
-                  0000c27c    0000000e     (.cinit..data.load) [load image]
-                  0000c28a    00000006     (__TI_handler_table)
-                  0000c290    00000004     (.cinit..bss.load) [load image, compression = zero_init]
-                  0000c294    00000008     (__TI_cinit_table)
+.cinit     0    0000c4a8    00000020     
+                  0000c4a8    0000000e     (.cinit..data.load) [load image]
+                  0000c4b6    00000006     (__TI_handler_table)
+                  0000c4bc    00000004     (.cinit..bss.load) [load image, compression = zero_init]
+                  0000c4c0    00000008     (__TI_cinit_table)
 
 .init_array 
 *          0    00008000    00000000     UNINITIALIZED
 
 .TI.persistent 
-*          0    0000051a    00000000     UNINITIALIZED
+*          0    0000051e    00000000     UNINITIALIZED
 
 $fill000   0    0000ffde    00000002     
                   0000ffde    00000002     --HOLE-- [fill = ffff]
@@ -256,14 +263,14 @@ NMI        0    0000fffc    00000002
 
 LINKER GENERATED COPY TABLES
 
-__TI_cinit_table @ 0000c294 records: 2, size/record: 4, table size: 8
-	.data: load addr=0000c27c, load size=0000000e bytes, run addr=0000051a, run size=0000000a bytes, compression=copy
-	.bss: load addr=0000c290, load size=00000004 bytes, run addr=000003d0, run size=0000014a bytes, compression=zero_init
+__TI_cinit_table @ 0000c4c0 records: 2, size/record: 4, table size: 8
+	.data: load addr=0000c4a8, load size=0000000e bytes, run addr=0000051e, run size=0000000a bytes, compression=copy
+	.bss: load addr=0000c4bc, load size=00000004 bytes, run addr=000003d0, run size=0000014e bytes, compression=zero_init
 
 
 LINKER GENERATED HANDLER TABLE
 
-__TI_handler_table @ 0000c28a records: 3, size/record: 2, table size: 6
+__TI_handler_table @ 0000c4b6 records: 3, size/record: 2, table size: 6
 	index: 0, handler: __TI_zero_init
 	index: 1, handler: __TI_decompress_rle24
 	index: 2, handler: __TI_decompress_none
@@ -281,11 +288,11 @@ address   name
 00000049  ADC10DTC1               
 000001b4  ADC10MEM                
 000001bc  ADC10SA                 
-0000a346  ADC10_ISR               
+0000a566  ADC10_ISR               
 00000057  BCSCTL1                 
 00000058  BCSCTL2                 
 00000053  BCSCTL3                 
-0000a360  C$$EXIT                 
+0000a580  C$$EXIT                 
 000010fb  CALBC1_12MHZ            
 000010f9  CALBC1_16MHZ            
 000010ff  CALBC1_1MHZ             
@@ -294,10 +301,10 @@ address   name
 000010f8  CALDCO_16MHZ            
 000010fe  CALDCO_1MHZ             
 000010fc  CALDCO_8MHZ             
-0000c234  Charge                  
+0000c460  Charge                  
 00000056  DCOCTL                  
-00009770  END_GAME_event          
-00008830  ERROR2                  
+000098a8  END_GAME_event          
+00008836  ERROR2                  
 00000128  FCTL1                   
 0000012a  FCTL2                   
 0000012c  FCTL3                   
@@ -305,11 +312,11 @@ address   name
 00000001  IE2                     
 00000002  IFG1                    
 00000003  IFG2                    
-00009fc8  ISR_trap                
-00008f42  LCD_UPDATE_event        
+0000a1dc  ISR_trap                
+00008f48  LCD_UPDATE_event        
 0000848a  MOVE_SNAKE_event        
-0000a09c  NEW_GAME_event          
-00009a2e  NEXT_LEVEL_event        
+0000a2b0  NEW_GAME_event          
+0000950a  NEXT_LEVEL_event        
 000000c0  OA0CTL0                 
 000000c1  OA0CTL1                 
 000000c2  OA1CTL0                 
@@ -340,13 +347,13 @@ address   name
 0000001d  P4OUT                   
 00000011  P4REN                   
 0000001f  P4SEL                   
-0000a250  Port_1_ISR              
-000091b0  RBX430_init             
-00009572  START_LEVEL_event       
-00009b96  SWITCH_1_event          
-0000a134  SWITCH_2_event          
-0000a0c2  SWITCH_3_event          
-0000a074  SWITCH_4_event          
+0000a464  Port_1_ISR              
+000091c6  RBX430_init             
+00009620  START_LEVEL_event       
+00009d36  SWITCH_1_event          
+0000a348  SWITCH_2_event          
+0000a2d6  SWITCH_3_event          
+0000a288  SWITCH_4_event          
 00000172  TACCR0                  
 00000174  TACCR1                  
 00000176  TACCR2                  
@@ -356,7 +363,7 @@ address   name
 00000160  TACTL                   
 0000012e  TAIV                    
 00000170  TAR                     
-000004f2  TB0_tone_on             
+000004f6  TB0_tone_on             
 00000192  TBCCR0                  
 00000194  TBCCR1                  
 00000196  TBCCR2                  
@@ -388,23 +395,23 @@ address   name
 0000006d  UCB0STAT                
 0000006f  UCB0TXBUF               
 00000120  WDTCTL                  
-000090ee  WDT_ISR                 
-000004f4  WDT_cps_cnt             
-000004f6  WDT_debounce_cnt        
+00009104  WDT_ISR                 
+000004f8  WDT_cps_cnt             
+000004fa  WDT_debounce_cnt        
 000004ee  WDT_delay               
-000004f8  WDT_move_cnt            
+000004fc  WDT_move_cnt            
 00000600  __STACK_END             
 0000007c  __STACK_SIZE            
 000001d0  __SYSMEM_SIZE           
-0000c294  __TI_CINIT_Base         
-0000c29c  __TI_CINIT_Limit        
-0000c28a  __TI_Handler_Table_Base 
-0000c290  __TI_Handler_Table_Limit
+0000c4c0  __TI_CINIT_Base         
+0000c4c8  __TI_CINIT_Limit        
+0000c4b6  __TI_Handler_Table_Base 
+0000c4bc  __TI_Handler_Table_Limit
 UNDEFED   __TI_INITARRAY_Base     
 UNDEFED   __TI_INITARRAY_Limit    
-00009fc8  __TI_ISR_TRAP           
-0000a2cc  __TI_decompress_none    
-0000a356  __TI_decompress_rle24   
+0000a1dc  __TI_ISR_TRAP           
+0000a4e0  __TI_decompress_none    
+0000a576  __TI_decompress_rle24   
 0000ffe4  __TI_int02              
 0000ffe6  __TI_int03              
 0000ffea  __TI_int05              
@@ -416,129 +423,136 @@ UNDEFED   __TI_INITARRAY_Limit
 0000fff8  __TI_int12              
 0000fffa  __TI_int13              
 0000fffc  __TI_int14              
-0000a290  __TI_zero_init          
+0000a4a4  __TI_zero_init          
 ffffffff  __binit__               
 ffffffff  __c_args__              
-00009ff4  __mspabi_divi           
-0000a266  __mspabi_divu           
-0000a30e  __mspabi_func_epilog_1  
-0000a30c  __mspabi_func_epilog_2  
-0000a30a  __mspabi_func_epilog_3  
-0000a308  __mspabi_func_epilog_4  
-0000a306  __mspabi_func_epilog_5  
-0000a304  __mspabi_func_epilog_6  
-0000a302  __mspabi_func_epilog_7  
-0000a2b8  __mspabi_mpyi           
-0000a2b8  __mspabi_mpyi_sw        
-0000a10e  __mspabi_mpyl           
-0000a10e  __mspabi_mpyl_sw        
-00009ff4  __mspabi_remi           
-0000a266  __mspabi_remu           
-000099e2  __mspabi_srli           
-00009a28  __mspabi_srli_1         
-00009a04  __mspabi_srli_10        
-00009a00  __mspabi_srli_11        
-000099fc  __mspabi_srli_12        
-000099f8  __mspabi_srli_13        
-000099f4  __mspabi_srli_14        
-000099f0  __mspabi_srli_15        
-00009a24  __mspabi_srli_2         
-00009a20  __mspabi_srli_3         
-00009a1c  __mspabi_srli_4         
-00009a18  __mspabi_srli_5         
-00009a14  __mspabi_srli_6         
-00009a10  __mspabi_srli_7         
-00009a0c  __mspabi_srli_8         
-00009a08  __mspabi_srli_9         
-0000a2de  __mspabi_srll           
-0000998a  _auto_init              
-0000a21c  _c_int00_noargs_noexit  
-0000051e  _lock                   
-0000a364  _nop                    
+0000a208  __mspabi_divi           
+0000a47a  __mspabi_divu           
+0000a522  __mspabi_func_epilog_1  
+0000a520  __mspabi_func_epilog_2  
+0000a51e  __mspabi_func_epilog_3  
+0000a51c  __mspabi_func_epilog_4  
+0000a51a  __mspabi_func_epilog_5  
+0000a518  __mspabi_func_epilog_6  
+0000a516  __mspabi_func_epilog_7  
+0000a4cc  __mspabi_mpyi           
+0000a4cc  __mspabi_mpyi_sw        
+0000a322  __mspabi_mpyl           
+0000a322  __mspabi_mpyl_sw        
+0000a208  __mspabi_remi           
+0000a47a  __mspabi_remu           
+00009b86  __mspabi_srli           
+00009bcc  __mspabi_srli_1         
+00009ba8  __mspabi_srli_10        
+00009ba4  __mspabi_srli_11        
+00009ba0  __mspabi_srli_12        
+00009b9c  __mspabi_srli_13        
+00009b98  __mspabi_srli_14        
+00009b94  __mspabi_srli_15        
+00009bc8  __mspabi_srli_2         
+00009bc4  __mspabi_srli_3         
+00009bc0  __mspabi_srli_4         
+00009bbc  __mspabi_srli_5         
+00009bb8  __mspabi_srli_6         
+00009bb4  __mspabi_srli_7         
+00009bb0  __mspabi_srli_8         
+00009bac  __mspabi_srli_9         
+0000a4f2  __mspabi_srll           
+00009b2e  _auto_init              
+0000a430  _c_int00_noargs_noexit  
+00000522  _lock                   
+0000a584  _nop                    
 0000fffe  _reset_vector           
 00000584  _stack                  
 00000200  _sys_memory             
-0000a35c  _system_pre_init        
-00000520  _unlock                 
-0000a360  abort                   
-00008660  add_head                
-000004fa  backlight_cnt           
-0000a27c  beep                    
+0000a57c  _system_pre_init        
+00000524  _unlock                 
+0000a580  abort                   
+00008666  add_head                
+000004fe  backlight_cnt           
+0000a490  beep                    
 ffffffff  binit                   
-0000a34e  blink                   
-0000a312  charge                  
-00009e78  checkCollision          
-00009d02  collisionWithFOOD       
-00009860  collisionWithROCK       
-00009edc  collisionWithSNAKE      
-0000a0e8  collisionWithWALL       
-00009674  createFood              
-00009bd8  createRock              
-0000bdae  cs                      
-000004fc  currentRocks            
-00009a78  delete_tail             
-00000513  direction               
-00009f0c  doDitty                 
-00009d38  draw_circle_food        
-00009d6e  draw_square_food        
-00009eaa  draw_square_rock        
-00009da4  draw_star_food          
-00009dda  draw_triangle_food      
-0000c14e  dv3                     
-000004fe  foodEaten               
+0000a56e  blink                   
+0000a526  charge                  
+0000a05a  checkCollision          
+00009ee4  collisionWithFOOD       
+00009a04  collisionWithROCK       
+0000a0f0  collisionWithSNAKE      
+00009474  collisionWithTELE       
+00009cac  collisionWithWALL       
+000097ac  createFood              
+00009d78  createRock              
+00009dba  createTele              
+0000bfce  cs                      
+00000500  currentRocks            
+00009bd2  delete_tail             
+00000517  direction               
+0000a120  doDitty                 
+00009f1a  draw_circle_food        
+0000a08c  draw_circle_tele        
+00009f50  draw_square_food        
+0000a0be  draw_square_rock        
+00009f86  draw_star_food          
+00009fbc  draw_triangle_food      
+0000c37a  dv3                     
+00000502  foodEaten               
 000004d0  foods                   
-000095f4  free                    
-0000a020  freeAllFood             
-0000a04a  freeAllRocks            
-00000500  game_mode               
-00000514  head                    
-00000502  i2c_fSCL                
-0000a320  imperial_march          
-0000bf8e  imperial_march_notes    
-0000a366  king_snake_image        
-0000992c  lcd_WD                  
-00009ac2  lcd_WD2                 
-0000a2a4  lcd_backlight           
-00008cb6  lcd_circle              
-0000a33c  lcd_clear               
-00009f3c  lcd_cursor              
-000089c8  lcd_init                
+0000972c  free                    
+0000a234  freeAllFood             
+0000a25e  freeAllRocks            
+0000a2fc  freeAllTele             
+00000504  game_mode               
+00000518  head                    
+00000506  i2c_fSCL                
+0000a534  imperial_march          
+0000c1ae  imperial_march_notes    
+0000a586  king_snake_image        
+00009ad0  lcd_WD                  
+00009c1c  lcd_WD2                 
+0000a4b8  lcd_backlight           
+00008cbc  lcd_circle              
+0000a55c  lcd_clear               
+0000a150  lcd_cursor              
+000089ce  lcd_init                
 00008000  lcd_point               
-0000a158  lcd_printf              
-00008e10  lcd_putchar             
-000094ea  lcd_rectangle           
-00009f6c  lcd_set                 
-00009e44  lcd_set_x_y             
-0000a1c0  lcd_square              
-0000931e  lcd_star                
-000096f2  lcd_triangle            
-0000901a  lcd_wordImage           
-00000518  level                   
-00008b4e  main                    
-00009270  malloc                  
-0000a2f0  memcpy                  
-00009c92  minit                   
-00000506  move_cnt                
-00009b52  new_snake               
-0000945e  noCollideFood           
-00009c1a  outTone                 
-00009f9a  port1_init              
-0000c270  px_off                  
-0000c276  px_on                   
-00009cca  rand                    
-000097ea  respawnFood             
+0000a36c  lcd_printf              
+00008e16  lcd_putchar             
+00009598  lcd_rectangle           
+0000a180  lcd_set                 
+0000a026  lcd_set_x_y             
+0000a3d4  lcd_square              
+00009334  lcd_star                
+0000982a  lcd_triangle            
+00009030  lcd_wordImage           
+0000051c  level                   
+00008b54  main                    
+00009286  malloc                  
+0000a504  memcpy                  
+00009e74  minit                   
+0000050a  move_cnt                
+00009cf2  new_snake               
+000096a6  noCollideFood           
+00009dfc  outTone                 
+0000a1ae  port1_init              
+0000c49c  px_off                  
+0000c4a2  px_on                   
+00009eac  rand                    
+0000a550  rasberry                
+00009922  respawnFood             
 000004e4  rocks                   
-00000508  score                   
-0000050a  seconds                 
+0000050c  score                   
+0000050e  seconds                 
 000003d0  snake                   
-0000b28e  snake1_image            
-0000b910  snake_text_image        
-000093c6  spawnRocks              
-0000a32e  strlen                  
-0000050e  sys_event               
-00000519  tail                    
-0000a236  timerB_init             
-0000a17c  watchdog_init           
+0000b4ae  snake1_image            
+0000bb30  snake_text_image        
+000093dc  spawnRocks              
+00009998  spawnTeles              
+0000a542  strlen                  
+00000512  sys_event               
+0000051d  tail                    
+000004f2  teles                   
+0000a44a  timerB_init             
+0000a390  watchdog_init           
 
 
 GLOBAL SYMBOLS: SORTED BY Symbol Address 
@@ -641,25 +655,26 @@ address   name
 000004d0  foods                   
 000004e4  rocks                   
 000004ee  WDT_delay               
-000004f2  TB0_tone_on             
-000004f4  WDT_cps_cnt             
-000004f6  WDT_debounce_cnt        
-000004f8  WDT_move_cnt            
-000004fa  backlight_cnt           
-000004fc  currentRocks            
-000004fe  foodEaten               
-00000500  game_mode               
-00000502  i2c_fSCL                
-00000506  move_cnt                
-00000508  score                   
-0000050a  seconds                 
-0000050e  sys_event               
-00000513  direction               
-00000514  head                    
-00000518  level                   
-00000519  tail                    
-0000051e  _lock                   
-00000520  _unlock                 
+000004f2  teles                   
+000004f6  TB0_tone_on             
+000004f8  WDT_cps_cnt             
+000004fa  WDT_debounce_cnt        
+000004fc  WDT_move_cnt            
+000004fe  backlight_cnt           
+00000500  currentRocks            
+00000502  foodEaten               
+00000504  game_mode               
+00000506  i2c_fSCL                
+0000050a  move_cnt                
+0000050c  score                   
+0000050e  seconds                 
+00000512  sys_event               
+00000517  direction               
+00000518  head                    
+0000051c  level                   
+0000051d  tail                    
+00000522  _lock                   
+00000524  _unlock                 
 00000584  _stack                  
 00000600  __STACK_END             
 000010f8  CALDCO_16MHZ            
@@ -672,128 +687,134 @@ address   name
 000010ff  CALBC1_1MHZ             
 00008000  lcd_point               
 0000848a  MOVE_SNAKE_event        
-00008660  add_head                
-00008830  ERROR2                  
-000089c8  lcd_init                
-00008b4e  main                    
-00008cb6  lcd_circle              
-00008e10  lcd_putchar             
-00008f42  LCD_UPDATE_event        
-0000901a  lcd_wordImage           
-000090ee  WDT_ISR                 
-000091b0  RBX430_init             
-00009270  malloc                  
-0000931e  lcd_star                
-000093c6  spawnRocks              
-0000945e  noCollideFood           
-000094ea  lcd_rectangle           
-00009572  START_LEVEL_event       
-000095f4  free                    
-00009674  createFood              
-000096f2  lcd_triangle            
-00009770  END_GAME_event          
-000097ea  respawnFood             
-00009860  collisionWithROCK       
-0000992c  lcd_WD                  
-0000998a  _auto_init              
-000099e2  __mspabi_srli           
-000099f0  __mspabi_srli_15        
-000099f4  __mspabi_srli_14        
-000099f8  __mspabi_srli_13        
-000099fc  __mspabi_srli_12        
-00009a00  __mspabi_srli_11        
-00009a04  __mspabi_srli_10        
-00009a08  __mspabi_srli_9         
-00009a0c  __mspabi_srli_8         
-00009a10  __mspabi_srli_7         
-00009a14  __mspabi_srli_6         
-00009a18  __mspabi_srli_5         
-00009a1c  __mspabi_srli_4         
-00009a20  __mspabi_srli_3         
-00009a24  __mspabi_srli_2         
-00009a28  __mspabi_srli_1         
-00009a2e  NEXT_LEVEL_event        
-00009a78  delete_tail             
-00009ac2  lcd_WD2                 
-00009b52  new_snake               
-00009b96  SWITCH_1_event          
-00009bd8  createRock              
-00009c1a  outTone                 
-00009c92  minit                   
-00009cca  rand                    
-00009d02  collisionWithFOOD       
-00009d38  draw_circle_food        
-00009d6e  draw_square_food        
-00009da4  draw_star_food          
-00009dda  draw_triangle_food      
-00009e44  lcd_set_x_y             
-00009e78  checkCollision          
-00009eaa  draw_square_rock        
-00009edc  collisionWithSNAKE      
-00009f0c  doDitty                 
-00009f3c  lcd_cursor              
-00009f6c  lcd_set                 
-00009f9a  port1_init              
-00009fc8  ISR_trap                
-00009fc8  __TI_ISR_TRAP           
-00009ff4  __mspabi_divi           
-00009ff4  __mspabi_remi           
-0000a020  freeAllFood             
-0000a04a  freeAllRocks            
-0000a074  SWITCH_4_event          
-0000a09c  NEW_GAME_event          
-0000a0c2  SWITCH_3_event          
-0000a0e8  collisionWithWALL       
-0000a10e  __mspabi_mpyl           
-0000a10e  __mspabi_mpyl_sw        
-0000a134  SWITCH_2_event          
-0000a158  lcd_printf              
-0000a17c  watchdog_init           
-0000a1c0  lcd_square              
-0000a21c  _c_int00_noargs_noexit  
-0000a236  timerB_init             
-0000a250  Port_1_ISR              
-0000a266  __mspabi_divu           
-0000a266  __mspabi_remu           
-0000a27c  beep                    
-0000a290  __TI_zero_init          
-0000a2a4  lcd_backlight           
-0000a2b8  __mspabi_mpyi           
-0000a2b8  __mspabi_mpyi_sw        
-0000a2cc  __TI_decompress_none    
-0000a2de  __mspabi_srll           
-0000a2f0  memcpy                  
-0000a302  __mspabi_func_epilog_7  
-0000a304  __mspabi_func_epilog_6  
-0000a306  __mspabi_func_epilog_5  
-0000a308  __mspabi_func_epilog_4  
-0000a30a  __mspabi_func_epilog_3  
-0000a30c  __mspabi_func_epilog_2  
-0000a30e  __mspabi_func_epilog_1  
-0000a312  charge                  
-0000a320  imperial_march          
-0000a32e  strlen                  
-0000a33c  lcd_clear               
-0000a346  ADC10_ISR               
-0000a34e  blink                   
-0000a356  __TI_decompress_rle24   
-0000a35c  _system_pre_init        
-0000a360  C$$EXIT                 
-0000a360  abort                   
-0000a364  _nop                    
-0000a366  king_snake_image        
-0000b28e  snake1_image            
-0000b910  snake_text_image        
-0000bdae  cs                      
-0000bf8e  imperial_march_notes    
-0000c14e  dv3                     
-0000c234  Charge                  
-0000c270  px_off                  
-0000c276  px_on                   
-0000c28a  __TI_Handler_Table_Base 
-0000c290  __TI_Handler_Table_Limit
-0000c294  __TI_CINIT_Base         
-0000c29c  __TI_CINIT_Limit        
+00008666  add_head                
+00008836  ERROR2                  
+000089ce  lcd_init                
+00008b54  main                    
+00008cbc  lcd_circle              
+00008e16  lcd_putchar             
+00008f48  LCD_UPDATE_event        
+00009030  lcd_wordImage           
+00009104  WDT_ISR                 
+000091c6  RBX430_init             
+00009286  malloc                  
+00009334  lcd_star                
+000093dc  spawnRocks              
+00009474  collisionWithTELE       
+0000950a  NEXT_LEVEL_event        
+00009598  lcd_rectangle           
+00009620  START_LEVEL_event       
+000096a6  noCollideFood           
+0000972c  free                    
+000097ac  createFood              
+0000982a  lcd_triangle            
+000098a8  END_GAME_event          
+00009922  respawnFood             
+00009998  spawnTeles              
+00009a04  collisionWithROCK       
+00009ad0  lcd_WD                  
+00009b2e  _auto_init              
+00009b86  __mspabi_srli           
+00009b94  __mspabi_srli_15        
+00009b98  __mspabi_srli_14        
+00009b9c  __mspabi_srli_13        
+00009ba0  __mspabi_srli_12        
+00009ba4  __mspabi_srli_11        
+00009ba8  __mspabi_srli_10        
+00009bac  __mspabi_srli_9         
+00009bb0  __mspabi_srli_8         
+00009bb4  __mspabi_srli_7         
+00009bb8  __mspabi_srli_6         
+00009bbc  __mspabi_srli_5         
+00009bc0  __mspabi_srli_4         
+00009bc4  __mspabi_srli_3         
+00009bc8  __mspabi_srli_2         
+00009bcc  __mspabi_srli_1         
+00009bd2  delete_tail             
+00009c1c  lcd_WD2                 
+00009cac  collisionWithWALL       
+00009cf2  new_snake               
+00009d36  SWITCH_1_event          
+00009d78  createRock              
+00009dba  createTele              
+00009dfc  outTone                 
+00009e74  minit                   
+00009eac  rand                    
+00009ee4  collisionWithFOOD       
+00009f1a  draw_circle_food        
+00009f50  draw_square_food        
+00009f86  draw_star_food          
+00009fbc  draw_triangle_food      
+0000a026  lcd_set_x_y             
+0000a05a  checkCollision          
+0000a08c  draw_circle_tele        
+0000a0be  draw_square_rock        
+0000a0f0  collisionWithSNAKE      
+0000a120  doDitty                 
+0000a150  lcd_cursor              
+0000a180  lcd_set                 
+0000a1ae  port1_init              
+0000a1dc  ISR_trap                
+0000a1dc  __TI_ISR_TRAP           
+0000a208  __mspabi_divi           
+0000a208  __mspabi_remi           
+0000a234  freeAllFood             
+0000a25e  freeAllRocks            
+0000a288  SWITCH_4_event          
+0000a2b0  NEW_GAME_event          
+0000a2d6  SWITCH_3_event          
+0000a2fc  freeAllTele             
+0000a322  __mspabi_mpyl           
+0000a322  __mspabi_mpyl_sw        
+0000a348  SWITCH_2_event          
+0000a36c  lcd_printf              
+0000a390  watchdog_init           
+0000a3d4  lcd_square              
+0000a430  _c_int00_noargs_noexit  
+0000a44a  timerB_init             
+0000a464  Port_1_ISR              
+0000a47a  __mspabi_divu           
+0000a47a  __mspabi_remu           
+0000a490  beep                    
+0000a4a4  __TI_zero_init          
+0000a4b8  lcd_backlight           
+0000a4cc  __mspabi_mpyi           
+0000a4cc  __mspabi_mpyi_sw        
+0000a4e0  __TI_decompress_none    
+0000a4f2  __mspabi_srll           
+0000a504  memcpy                  
+0000a516  __mspabi_func_epilog_7  
+0000a518  __mspabi_func_epilog_6  
+0000a51a  __mspabi_func_epilog_5  
+0000a51c  __mspabi_func_epilog_4  
+0000a51e  __mspabi_func_epilog_3  
+0000a520  __mspabi_func_epilog_2  
+0000a522  __mspabi_func_epilog_1  
+0000a526  charge                  
+0000a534  imperial_march          
+0000a542  strlen                  
+0000a550  rasberry                
+0000a55c  lcd_clear               
+0000a566  ADC10_ISR               
+0000a56e  blink                   
+0000a576  __TI_decompress_rle24   
+0000a57c  _system_pre_init        
+0000a580  C$$EXIT                 
+0000a580  abort                   
+0000a584  _nop                    
+0000a586  king_snake_image        
+0000b4ae  snake1_image            
+0000bb30  snake_text_image        
+0000bfce  cs                      
+0000c1ae  imperial_march_notes    
+0000c37a  dv3                     
+0000c460  Charge                  
+0000c49c  px_off                  
+0000c4a2  px_on                   
+0000c4b6  __TI_Handler_Table_Base 
+0000c4bc  __TI_Handler_Table_Limit
+0000c4c0  __TI_CINIT_Base         
+0000c4c8  __TI_CINIT_Limit        
 0000ffe4  __TI_int02              
 0000ffe6  __TI_int03              
 0000ffea  __TI_int05              
@@ -812,4 +833,4 @@ ffffffff  binit
 UNDEFED   __TI_INITARRAY_Base     
 UNDEFED   __TI_INITARRAY_Limit    
 
-[266 symbols]
+[273 symbols]

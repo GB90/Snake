@@ -26,8 +26,8 @@
 #define WDT_LCD		(WDT_CPS/4)			// 250 ms
 #define WDT_MOVE1	(WDT_CPS/4)			// 250 ms
 #define WDT_MOVE2	(WDT_CPS/8)			// 125 ms
-#define WDT_MOVE3	(WDT_CPS/16)		// 62 ms
-#define WDT_MOVE4	(WDT_CPS/32)		// 31 ms
+#define WDT_MOVE3	(WDT_CPS/8) //16)		// 62 ms
+#define WDT_MOVE4	(WDT_CPS/8) //32)		// 31 ms
 
 enum _SNAKE_USER_ERRORS
 {
@@ -70,6 +70,7 @@ void LCD_UPDATE_event(void);
 #define MAX_SNAKE			128			// max snake length (make power of 2)
 #define MAX_FOOD			10			// max # of foods
 #define MAX_ROCK			5			// max # of rocks
+#define MAX_TELE			2
 
 enum DIRECTION {RIGHT, UP, LEFT, DOWN};// movement constants
 enum MODE {IDLE, SETUP, PLAY, NEXT, EOG};// player modes
@@ -77,22 +78,22 @@ enum MODE {IDLE, SETUP, PLAY, NEXT, EOG};// player modes
 // LEVEL VARIABLES -------------------------------------------------------------
 #define TIME_1_LIMIT		30
 #define LEVEL_1_FOOD		10
-#define LEVEL_1_MAXSCORE	10
+#define LEVEL_1_MAXSCORE	2//10
 #define LEVEL_1_FOOD_POINTS 1
 
 #define TIME_2_LIMIT		30
 #define LEVEL_2_FOOD		MAX_FOOD
-#define LEVEL_2_MAXSCORE	30
+#define LEVEL_2_MAXSCORE	8//30
 #define LEVEL_2_FOOD_POINTS 2
 
 #define TIME_3_LIMIT		45
 #define LEVEL_3_FOOD		1
-#define LEVEL_3_MAXSCORE	40//60  FORTESTING
+#define LEVEL_3_MAXSCORE	20//60  FORTESTING
 #define LEVEL_3_FOOD_POINTS 3
 
 #define TIME_4_LIMIT		60
 #define LEVEL_4_FOOD		1
-#define LEVEL_4_MAXSCORE	60//100  FORTESTING
+#define LEVEL_4_MAXSCORE	28//100  FORTESTING
 #define LEVEL_4_FOOD_POINTS 4
 
 #define SYS_ERROR_MALLOC    5
@@ -129,8 +130,18 @@ typedef struct rock_struct {
 	void(*draw)(struct rock_struct* rock );
 } ROCK;
 
+typedef struct tele_struct {
+	   union {
+	      uint16 xy;         // 16-bit food coordinate ((y << 8) + x)
+	      POINT point;       // 2 8-bit food coordinates (x, y)
+	   } tele;
+	uint8 size;
+	void(*draw)(struct tele_struct* tele );
+} TELE;
+
 FOOD* createFood(FOOD* food, uint16 x, uint16 y);
 ROCK* createRock(ROCK* rock, uint16 x, uint16 y);
+TELE* createTELE(TELE* tele, uint16 x, uint16 y);
 
 void draw_square_food(FOOD* food, uint8 pen);
 void draw_triangle_food(FOOD* food, uint8 pen);
@@ -159,6 +170,7 @@ uint8 tail;							// tail index into snake array
 SNAKE snake[MAX_SNAKE];				// snake segments
 ROCK* rocks[MAX_ROCK];				// all rocks
 FOOD* foods[MAX_FOOD];				// all foods
+TELE* teles[MAX_TELE];
 
 
 
